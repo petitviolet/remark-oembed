@@ -280,3 +280,25 @@ test('`asyncImg` > photo flat oembed', async (t) => {
 
   t.snapshot(output);
 });
+
+test('`providers` > additional-provider', async (t) => {
+  const markdown = await readFile(join(FIXTURES, 'additional-provider.md'));
+  const output = await compile(markdown, {
+    providers: [
+      {
+        provider_name: "Hatena blog",
+        provider_url: "https://hatenablog.com",
+        endpoints: [
+          {
+            schemes: ["https://*.hatenablog.com/entry/*"],
+            url: "https://hatenablog.com/oembed",
+          },
+        ],
+      },
+    ]});
+
+  await writeFile(join(OUTPUTS, 'providers-additional-provider.html'), output);
+  await takeScreenshot(output, join(OUTPUTS, 'providers-additional-provider.png'));
+
+  t.snapshot(output);
+});

@@ -308,8 +308,7 @@ module.exports = (opts = {}) => {
   const { jsx = false } = opts;
 
   return async (tree) => {
-    const providers = await fetchOembedProviders();
-
+    const providers = (await fetchOembedProviders()).concat(opts.providers || [])
     const ctx = {
       ...opts,
       providers,

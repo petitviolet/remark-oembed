@@ -316,6 +316,30 @@ await mdx(src, {
 });
 ```
 
+### `providers`
+
+If you want to use additional oEmbed providers in addition to [the pre-defined list](https://oembed.com/providers.json), you can use `providers`.
+
+```javascript
+remark()
+  .use(require('remark-oembed'), {
+    providers: [
+      {
+        provider_name: "custom oEmbed provider",
+        provider_url: "https://oembed.example.com",
+        endpoints: [
+          {
+            schemes: ["https://oembed.example.com/post/*"],
+            url: "https://oembed.example.com/api/oembed",
+          },
+        ],
+      },
+    ],
+  })
+  .use(require('remark-html'))
+  .process(src, (err, file) => console.log(String(file)));
+```
+
 ## license
 
 BSD-3-Clause
